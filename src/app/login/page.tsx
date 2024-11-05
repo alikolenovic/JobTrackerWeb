@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import UserTokens from "@/components/UserTokens";
-import { useMsal } from "@azure/msal-react";
+import UserTokens from '@/components/UserTokens';
+import { useMsal } from '@azure/msal-react';
 
 export default function LoginPage() {
   const { instance } = useMsal();
 
   const handleLogin = () => {
-    instance.loginRedirect({
-      scopes: ["openid", "profile", "email"],
+    void instance.loginRedirect({
+      scopes: ['openid', 'profile', 'email'],
     });
   };
 

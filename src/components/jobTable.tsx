@@ -30,6 +30,8 @@ const JobTable = () => {
   const { userInfo } = useAuth();
   const { data, loading, error } = useQuery(GET_JOBS);
 
+  console.log(userInfo);
+
   if (loading) return <></>;
   if (error) return <p>Error: {error.message}</p>;
 
