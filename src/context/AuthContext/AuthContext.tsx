@@ -10,9 +10,7 @@ import React, {
 import { CustomJwtPayload } from '@/app/application-layout';
 import Loader from '@/components/Loader';
 import { useMsal } from '@azure/msal-react';
-import { jwtDecode } from 'jwt-decode';
 import { AuthContextType } from './AuthContext.types';
-import { tokenRequest } from '../../../msalConfig';
 
 // Define types for the context value
 
@@ -31,17 +29,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const initializeAuth = async (): Promise<void> => {
+    const initializeAuth = (): void => {
       if (accounts.length > 0) {
         try {
-          const response = await instance.acquireTokenSilent({
-            ...tokenRequest,
-            account: accounts[0],
-          });
-
           setIsAuthenticated(true);
-          setUserInfo(jwtDecode(response.idToken));
-          setAccessToken(response.accessToken);
         } catch (error) {
           console.error('Token acquisition failed:', error);
           setIsAuthenticated(false);
@@ -60,7 +51,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   }, [instance, accounts]);
 
   const login = () => {
-    void instance.loginRedirect(tokenRequest);
     localStorage.setItem('test', 'test');
   };
 

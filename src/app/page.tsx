@@ -1,6 +1,7 @@
 import { Avatar } from '@/components/avatar';
 import { Badge } from '@/components/badge';
 import { Divider } from '@/components/divider';
+import { Form } from '@/components/form';
 import { Heading, Subheading } from '@/components/heading';
 import JobTable from '@/components/jobTable';
 import { Select } from '@/components/select';
@@ -62,6 +63,7 @@ export default async function Home() {
       </div>
       <Subheading className="mt-14">Recent Jobs</Subheading>
       <JobTable />
+      <Form />
     </>
   );
 }

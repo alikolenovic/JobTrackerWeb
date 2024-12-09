@@ -97,7 +97,6 @@ export interface CustomJwtPayload extends JwtPayload {
   name?: string;
   // Add other claims as needed
 }
-
 export function ApplicationLayout({
   events,
   children,
@@ -110,7 +109,7 @@ export function ApplicationLayout({
   const [ready, setReady] = useState(false);
   const { userInfo, isAuthenticated, logout, login } = useAuth();
   const [loading, setLoading] = useState(true);
-
+  React.useEffect;
   const [user, setUser] = useState(''); // Initialize with null to avoid hydration issues
 
   useEffect(() => {

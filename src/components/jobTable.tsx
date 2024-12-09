@@ -1,7 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext/AuthContext';
 import { gql, useQuery } from '@apollo/client';
+import axios from 'axios';
 import Avatar from 'react-initials-avatar';
 import {
   Table,
@@ -27,13 +29,21 @@ const GET_JOBS = gql`
 `;
 
 const JobTable = () => {
-  const { userInfo } = useAuth();
-  const { data, loading, error } = useQuery(GET_JOBS);
+  const [data, setData] = useState(null);
 
-  console.log(userInfo);
+  useEffect(() => {
+    axios
+      .get('http://localhost:8081/jobs')
+      .then((response) => {
+        console.log(response);
+        setData(response.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
-  if (loading) return <></>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (data === null) {
+    return <></>;
+  }
 
   return (
     <Table className="mt-4 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
@@ -46,13 +56,13 @@ const JobTable = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.jobs.jobs.map((job) => (
-          <TableRow key={job.id} title={job.title}>
-            <TableCell>{job.id}</TableCell>
-            <TableCell className="text-zinc-500">{job.title}</TableCell>
+        {data.map((job) => (
+          <TableRow key={job.jobId} title={job.jobPosition}>
+            <TableCell>{job.jobId}</TableCell>
+            <TableCell className="text-zinc-500">{job.jobPosition}</TableCell>
             <TableCell>{job.company}</TableCell>
             <TableCell className="text-right">
-              {new Date(job.dateApplied).toLocaleString('en-us', {
+              {new Date(job.createdAt).toLocaleString('en-us', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
