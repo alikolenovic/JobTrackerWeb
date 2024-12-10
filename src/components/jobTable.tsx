@@ -1,49 +1,29 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAuth } from '@/context/AuthContext/AuthContext';
-import { gql, useQuery } from '@apollo/client';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import axios from 'axios';
-import Avatar from 'react-initials-avatar';
-import {
-  Table,
-  TableHead,
-  TableRow,
-  TableHeader,
-  TableBody,
-  TableCell,
-} from './table';
-
-const GET_JOBS = gql`
-  query {
-    jobs {
-      jobs {
-        company
-        dateApplied
-        id
-        title
-      }
-      isCacheHit
-    }
-  }
-`;
+import { Table, TableHead, TableRow, TableHeader, TableBody, TableCell } from './table';
 
 const JobTable = () => {
   const [data, setData] = useState(null);
+  const { user } = useUser();
+
+  console.log(user);
 
   useEffect(() => {
     axios
-      .get('http://localhost:8081/jobs')
+      .get(`/api/jobs/${user.sid}`)
       .then((response) => {
-        console.log(response);
-        setData(response.data);
+        setData(response.data.data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [user]);
 
   if (data === null) {
     return <></>;
   }
+  console.log(data);
 
   return (
     <Table className="mt-4 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">

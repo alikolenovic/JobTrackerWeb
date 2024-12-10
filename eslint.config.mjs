@@ -24,7 +24,7 @@ const config = [
   {
     languageOptions: {
       parserOptions: {
-        project: 'tsconfig.json',
+        project: './tsconfig.json',
         tsconfigRootDir: __dirname,
         ecmaFeatures: { jsx: true },
       },

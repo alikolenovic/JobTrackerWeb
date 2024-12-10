@@ -1,22 +1,11 @@
 'use client';
 
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/20/solid';
 import axios from 'axios';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-
-const user = {
-  userId: 1,
-  username: 'rwilloughby6',
-  email: 'rwilloughby6@delicious.com',
-  firstName: 'Redford',
-  lastName: 'Willoughby',
-  role: 'user',
-  createdAt: '2024-12-06 17:43:06.9128756 +0000 UTC',
-  updatedAt: '2024-12-06 17:43:06.9128756 +0000 UTC',
-  lastLogin: '2024-12-06 17:43:06.9128756 +0000 UTC',
-};
 
 interface UserI {
   userId: number;
@@ -41,34 +30,31 @@ export const Form = () => {
       },
     });
   };
+  const { user } = useUser();
+  console.log(user);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<UserI & { file?: File }>({ defaultValues: user });
+
   return (
     <form onSubmit={handleSubmit(submit)} encType="multipart/form-data">
       <div className="space-y-12">
         <div className="border-b border-white/10 pb-12">
           <h2 className="text-base/7 font-semibold text-white">Profile</h2>
           <p className="mt-1 text-sm/6 text-gray-400">
-            This information will be displayed publicly so be careful what you
-            share.
+            This information will be displayed publicly so be careful what you share.
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-4">
-              <label
-                htmlFor="username"
-                className="block text-sm/6 font-medium text-white"
-              >
+              <label htmlFor="username" className="block text-sm/6 font-medium text-white">
                 Username
               </label>
               <div className="mt-2">
                 <div className="flex items-center rounded-md bg-white/5 pl-3 outline outline-1 -outline-offset-1 outline-white/10 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                  <div className="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">
-                    jobtracker.com/
-                  </div>
+                  <div className="shrink-0 select-none text-base text-gray-500 sm:text-sm/6">jobtracker.com/</div>
                   <input
                     id="username"
                     {...register('username')}
@@ -103,10 +89,7 @@ export const Form = () => {
             </div> */}
 
             <div className="col-span-full">
-              <label
-                htmlFor="file"
-                className="block text-sm/6 font-medium text-white"
-              >
+              <label htmlFor="file" className="block text-sm/6 font-medium text-white">
                 Photo
               </label>
               <div className="mt-2 flex items-center gap-x-3">
@@ -164,19 +147,12 @@ export const Form = () => {
         </div>
 
         <div className="border-b border-white/10 pb-12">
-          <h2 className="text-base/7 font-semibold text-white">
-            Personal Information
-          </h2>
-          <p className="mt-1 text-sm/6 text-gray-400">
-            Use a permanent address where you can receive mail.
-          </p>
+          <h2 className="text-base/7 font-semibold text-white">Personal Information</h2>
+          <p className="mt-1 text-sm/6 text-gray-400">Use a permanent address where you can receive mail.</p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
-              <label
-                htmlFor="first-name"
-                className="block text-sm/6 font-medium text-white"
-              >
+              <label htmlFor="first-name" className="block text-sm/6 font-medium text-white">
                 First name
               </label>
               <div className="mt-2">
@@ -192,10 +168,7 @@ export const Form = () => {
             </div>
 
             <div className="sm:col-span-3">
-              <label
-                htmlFor="last-name"
-                className="block text-sm/6 font-medium text-white"
-              >
+              <label htmlFor="last-name" className="block text-sm/6 font-medium text-white">
                 Last name
               </label>
               <div className="mt-2">
@@ -211,10 +184,7 @@ export const Form = () => {
             </div>
 
             <div className="sm:col-span-4">
-              <label
-                htmlFor="email"
-                className="block text-sm/6 font-medium text-white"
-              >
+              <label htmlFor="email" className="block text-sm/6 font-medium text-white">
                 Email address
               </label>
               <div className="mt-2">
@@ -231,10 +201,7 @@ export const Form = () => {
           </div>
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm/6 font-semibold text-white"
-            >
+            <button type="button" className="text-sm/6 font-semibold text-white">
               Cancel
             </button>
             <button
