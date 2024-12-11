@@ -14,7 +14,12 @@ import {
 import Loader from '@/components/loader';
 import Login from '@/components/login';
 import Logout from '@/components/logout';
-import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from '@/components/navbar';
+import {
+  Navbar,
+  NavbarItem,
+  NavbarSection,
+  NavbarSpacer,
+} from '@/components/navbar';
 import {
   Sidebar,
   SidebarBody,
@@ -54,7 +59,11 @@ import InitialsAvatar from 'react-initials-avatar';
 
 // Default values shown
 
-function AccountDropdownMenu({ anchor }: { anchor: 'top start' | 'bottom end' }) {
+function AccountDropdownMenu({
+  anchor,
+}: {
+  anchor: 'top start' | 'bottom end';
+}) {
   return (
     <DropdownMenu className="min-w-64" anchor={anchor}>
       <DropdownItem href="#">
@@ -99,7 +108,9 @@ export function ApplicationLayout({ children }: { children: React.ReactNode }) {
         <Dropdown>
           <DropdownButton as={SidebarItem}>
             <span className="flex min-w-0 items-center gap-5">
-              <InitialsAvatar name={`${user?.given_name} ${user?.family_name}`} />
+              <InitialsAvatar
+                name={`${user?.given_name} ${user?.family_name}`}
+              />
               {/* <Avatar src="/users/erica.jpg" className='size-10'  square  /> */}
               <span className="min-w-0">
                 <span className="block truncate text-sm/5 font-medium text-zinc-950 dark:text-white">
@@ -149,10 +160,13 @@ export function ApplicationLayout({ children }: { children: React.ReactNode }) {
             <Dropdown>
               <DropdownButton as={SidebarItem}>
                 <Avatar src="/teams/catalyst.svg" />
-                <SidebarLabel>Catalyst</SidebarLabel>
+                <SidebarLabel>Job Tracker</SidebarLabel>
                 <ChevronDownIcon />
               </DropdownButton>
-              <DropdownMenu className="min-w-80 lg:min-w-64" anchor="bottom start">
+              <DropdownMenu
+                className="min-w-80 lg:min-w-64"
+                anchor="bottom start"
+              >
                 <DropdownItem href="/settings">
                   <Cog8ToothIcon />
                   <DropdownLabel>Settings</DropdownLabel>
@@ -161,15 +175,6 @@ export function ApplicationLayout({ children }: { children: React.ReactNode }) {
                 <DropdownItem href="#">
                   <Avatar slot="icon" src="/teams/catalyst.svg" />
                   <DropdownLabel>Catalyst</DropdownLabel>
-                </DropdownItem>
-                <DropdownItem href="#">
-                  <Avatar slot="icon" initials="BE" className="bg-purple-500 text-white" />
-                  <DropdownLabel>Big Events</DropdownLabel>
-                </DropdownItem>
-                <DropdownDivider />
-                <DropdownItem href="#">
-                  <PlusIcon />
-                  <DropdownLabel>New team&hellip;</DropdownLabel>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -181,15 +186,24 @@ export function ApplicationLayout({ children }: { children: React.ReactNode }) {
                 <HomeIcon />
                 <SidebarLabel>Home</SidebarLabel>
               </SidebarItem>
-              <SidebarItem href="/events" current={pathname.startsWith('/events')}>
+              <SidebarItem
+                href="/events"
+                current={pathname.startsWith('/events')}
+              >
                 <Square2StackIcon />
                 <SidebarLabel>Events</SidebarLabel>
               </SidebarItem>
-              <SidebarItem href="/orders" current={pathname.startsWith('/orders')}>
+              <SidebarItem
+                href="/orders"
+                current={pathname.startsWith('/orders')}
+              >
                 <TicketIcon />
                 <SidebarLabel>Orders</SidebarLabel>
               </SidebarItem>
-              <SidebarItem href="/settings" current={pathname.startsWith('/settings')}>
+              <SidebarItem
+                href="/settings"
+                current={pathname.startsWith('/settings')}
+              >
                 <Cog6ToothIcon />
                 <SidebarLabel>Settings</SidebarLabel>
               </SidebarItem>
@@ -209,7 +223,9 @@ export function ApplicationLayout({ children }: { children: React.ReactNode }) {
             </SidebarSection>
           </SidebarBody>
 
-          <SidebarFooter className="max-lg:hidden">{accountInfo()}</SidebarFooter>
+          <SidebarFooter className="max-lg:hidden">
+            {accountInfo()}
+          </SidebarFooter>
         </Sidebar>
       }
     >
