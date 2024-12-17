@@ -1,6 +1,6 @@
-# Catalyst Demo
+# Job Tracker 
 
-To run the Catalyst demo, first install the npm dependencies:
+To run the Job Tracker demo, first install the npm dependencies:
 
 ```bash
 npm install

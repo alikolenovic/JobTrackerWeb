@@ -25,6 +25,7 @@ const config = [
     languageOptions: {
       parserOptions: {
         project: './tsconfig.json',
+        tsconfigRootDir: __dirname,
         ecmaFeatures: { jsx: true },
       },
       globals: { ...globals.browser, ...globals.node },
