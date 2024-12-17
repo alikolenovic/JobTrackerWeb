@@ -10,7 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   const { accessToken } = await getAccessToken(req, res);
   const encodedUserId = encodeURIComponent(id);
-
+  console.log(req.method);
   if (req.method === 'GET') {
     // Handle GET request
     try {
@@ -48,13 +48,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       data.userId = id;
 
       if (process.env.GO_SERVER) {
-        const fetchResponse = await fetch(`${process.env.GO_SERVER}/jobs`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const fetchResponse = await fetch(
+          `${process.env.GO_SERVER}/jobs/${encodedUserId}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify(data),
           },
-          body: JSON.stringify(data),
-        });
+        );
 
         if (!fetchResponse.ok) {
           return res
@@ -62,13 +66,39 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             .json({ error: 'Failed to add job' });
         }
 
-        return res.status(200).json({ message: 'Added job' });
+        const job = await fetchResponse.json();
+
+        return res.status(200).json({ job: job });
       }
 
       return res.status(500).json({ error: 'No environment config found' });
     } catch (error) {
       return res.status(500).json({ error: error });
     }
+  }
+
+  if (req.method === 'DELETE') {
+    if (process.env.GO_SERVER) {
+      try {
+        const fetchResponse = await fetch(
+          `${process.env.GO_SERVER}/jobs/${encodedUserId}`,
+          {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${accessToken}` },
+          },
+        );
+
+        if (!fetchResponse.ok) {
+          return res
+            .status(fetchResponse.status)
+            .json({ message: 'Failed to delete' });
+        }
+        return res.status(200).json({ message: 'Successfully deleted' });
+      } catch (error) {
+        res.status(500).json({ error: error });
+      }
+    }
+    return res.status(500).json({ error: 'No environment config found' });
   }
 
   // Method not allowed
